@@ -140,9 +140,14 @@ class ImapConnection():
             _, message_data = self.imapcon.search(None, 'ALL')
 
             for message_id in message_data[0].split():
-                _, message_data = self.imapcon.fetch(
-                    message_id, '(RFC822)')
-                raw_email = email.message_from_string(message_data[0][1])  # type: email.message.Message
+                _, message_data = self.imapcon.fetch(message_id, '(RFC822)')
+
+                if type(message_data[0][1]) is str:
+                    raw_email = email.message_from_string(message_data[0][1])  # type: email.message.Message
+                elif type(message_data[0][1]) is bytes:
+                    raw_email = email.message_from_bytes(message_data[0][1])  # type: email.message.Message
+
+                # else die here?
 
                 # TODO: Refactor
                 email_subject = raw_email.get('Subject')
