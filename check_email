@@ -173,7 +173,6 @@ class ImapConnection():
 
             time.sleep(2)
 
-
     def cleanup(self, reply_name, cleanup_time):
         self.imapcon.select(self.mailbox)
         time_cleanup = time.time() - cleanup_time
@@ -266,7 +265,7 @@ def parse_arguments(arguments):
 
     parser.add_argument('--smtp-mode',
                         help='smtp connection mode (default: ssl)\n'
-                              + 'Options: [ssl], [tls]',
+                             + 'Options: [ssl], [tls]',
                         default='ssl')
 
     parser.add_argument('--imap-host', '-ih',
@@ -574,6 +573,7 @@ if __name__ == '__main__':
     # pylint: disable=broad-exception-caught
     except Exception as e:
         TRACE = traceback.format_exc()
-        print("UNKNOWN: Python error: %s" % e.message)
+        print("UNKNOWN: Python error: \n")
+        print(e)
         print(TRACE)
         sys.exit(3)
